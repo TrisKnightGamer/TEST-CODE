@@ -1,0 +1,32 @@
+VideoCapture cap ("D:\\bandicam\\test.mp4");
+	int amountOfFrame = cap.get(CV_CAP_PROP_FRAME_COUNT);
+	if (!cap.isOpened())
+	{
+		cout << "Can't open file " << endl; 
+		return -1;
+	}
+	int width = cap.get(CAP_PROP_FRAME_WIDTH);
+	int height = cap.get(CAP_PROP_FRAME_HEIGHT);
+	//VideoWriter videoout(name1, CV_FOURCC('M','P','E','G'), 60,Size(width, height),true);
+	namedWindow("Play video", 1);
+	stringstream ss;
+	while (1)
+	{
+		Mat frame;
+		cap.open("D:\\bandicam\\test.mp4");
+		cap.read(frame);
+		cout << "Width : " << cap.get(CAP_PROP_FRAME_WIDTH) << endl;
+		cout << "Height : " << cap.get(CAP_PROP_FRAME_HEIGHT) << endl;
+		cout << "Amount of frame : " << cap.get(CV_CAP_PROP_FRAME_COUNT) << endl;
+		cout << "FPS: " << cap.get(CV_CAP_PROP_FPS) << endl;
+		cout << "CODEC: " << cap.get(CV_CAP_PROP_FOURCC) << endl;
+		cout << "AVI_RATION: " << cap.get(CV_CAP_PROP_POS_AVI_RATIO) << endl;
+		cap >> frame;
+		if (frame.empty())
+		break;
+		//videoout.write(frame);
+		imshow("Frame", frame);
+		char c = (char)waitKey(1);
+		if (c == 27)
+		break;
+	}
